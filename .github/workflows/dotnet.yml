@@ -1,0 +1,36 @@
+# This workflow will build a .NET project
+name: Publish NuGet
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@master
+      
+      - name: Use .NET 7.0.x
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 7.0.x
+        
+      - name: Building
+        run: dotnet build Notification.Wpf\Notification.Wpf.csproj -c Release
+        
+      - name: Packing
+        run: |                    
+          dotnet build XRPL.MagneticService/XRPL.MagneticService.csproj -c Release
+          dotnet pack XRPL.MagneticService/XRPL.MagneticService.csproj -c Release
+      - name: Publish GitHub
+        run: |
+          dotnet nuget push "**/*.nupkg" --skip-duplicate --source https://nuget.pkg.github.com/Platonenkov/index.json -u platonenkov -k ${{secrets.GITHUBAPIKEY}}
+          dotnet nuget push "**/*.snupkg" --skip-duplicate --source https://nuget.pkg.github.com/Platonenkov/index.json -u platonenkov -k ${{secrets.GITHUBAPIKEY}}
+      - name: Publish NuGet
+        run: |
+          dotnet nuget push "**/*.nupkg" --skip-duplicate -s https://api.nuget.org/v3/index.json -u platonenkov -k ${{ secrets.NUGETAPIKEY }} 
+          dotnet nuget push "**/*.snupkg" --skip-duplicate -s https://api.nuget.org/v3/index.json -u platonenkov -k ${{ secrets.NUGETAPIKEY }}
