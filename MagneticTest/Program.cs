@@ -11,6 +11,6 @@ var settrings = await client.GetDiceSettings();
 var check = await client.CheckDice(dices.Data[0].Token, dices.Data[0].Wallet);
 
 var wallet_nfts = await client.GetNFTs("rLiooJRSKeiNfRJcDBUhu4rcjQjGLWqa4p");
-var power = await client.GetDiceNFTsPower(wallet_nfts, settrings);
+var power = client.GetDiceNFTsPower(wallet_nfts, settrings);
 
 Console.ReadLine();
