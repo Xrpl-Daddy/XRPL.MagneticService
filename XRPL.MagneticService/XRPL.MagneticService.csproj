@@ -1,20 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup>
-    <Version>1.0.1.1</Version>
+    <Version>1.0.0.0</Version>
     <PackageReleaseNotes>fix account exchanges</PackageReleaseNotes>
     <SourceRevisionId>
       ^build_date$([System.DateTime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ss:fffZ"))
     </SourceRevisionId>
     <Description>This project will help you use Xrpl Magnetic api</Description>
-    <PackageProjectUrl>https://github.com/Platonenkov/XRPL.MagneticService</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Platonenkov/XRPL.MagneticService</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Xrpl-Daddy/XRPL.MagneticService</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Xrpl-Daddy/XRPL.MagneticService</RepositoryUrl>
     <Copyright>https://github.com/Platonenkov</Copyright>
     <Authors>Platonenkov</Authors>
     <Company>https://github.com/Platonenkov</Company>
