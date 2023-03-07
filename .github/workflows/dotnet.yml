@@ -20,7 +20,7 @@ jobs:
           dotnet-version: 7.0.x
         
       - name: Building
-        run: dotnet build Notification.Wpf\Notification.Wpf.csproj -c Release
+        run: dotnet build XRPL.MagneticService\XRPL.MagneticService.csproj -c Release
         
       - name: Packing
         run: |                    
