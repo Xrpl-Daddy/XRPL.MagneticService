@@ -87,7 +87,7 @@ namespace XRPL.MagneticService
         /// <param name="nftsResponse">nfts server response</param>
         /// <param name="settingsResponse">dice settings server response</param>
         /// <returns></returns>
-        public async Task<double> GetDiceNFTsPower(BaseServerResponse<NftsResponse> nftsResponse, BaseServerResponse<DiceSettingsResponse> settingsResponse)
+        public double GetDiceNFTsPower(BaseServerResponse<NftsResponse> nftsResponse, BaseServerResponse<DiceSettingsResponse> settingsResponse)
         {
             if (!nftsResponse.Response.IsSuccessStatusCode || nftsResponse.Data is not { Count: > 0 } nfts)
                 return 0;

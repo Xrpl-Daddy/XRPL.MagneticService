@@ -61,7 +61,7 @@ public abstract class BaseClient
         }
         if (response.StatusCode == HttpStatusCode.NotFound || !response.IsSuccessStatusCode) return new BaseServerResponse<TEntity>() { Response = response };
 
-        var data = await response.Content.ReadAsStringAsync(Cancel);
+        var data = await response.Content.ReadAsStringAsync();
         var result = string.IsNullOrWhiteSpace(data) ? new TEntity() : JsonConvert.DeserializeObject<TEntity>(data, serializerSettings);
         return new BaseServerResponse<TEntity>() { Response = response, Data = result };
     }
@@ -132,7 +132,7 @@ public abstract class BaseClient
         }
         if (response.StatusCode == HttpStatusCode.NotFound || !response.IsSuccessStatusCode) return new BaseServerResponse<TEntity>() { Response = response };
 
-        var data = await response.Content.ReadAsStringAsync(Cancel);
+        var data = await response.Content.ReadAsStringAsync();
         var result = string.IsNullOrWhiteSpace(data) ? new TEntity() : JsonConvert.DeserializeObject<TEntity>(data, serializerSettings);
         return new BaseServerResponse<TEntity>() { Response = response, Data = result };
     }
