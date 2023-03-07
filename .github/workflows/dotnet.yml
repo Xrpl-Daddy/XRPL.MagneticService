@@ -19,9 +19,6 @@ jobs:
         with:
           dotnet-version: 7.0.x
         
-      - name: Building
-        run: dotnet build XRPL.MagneticService\XRPL.MagneticService.csproj -c Release
-        
       - name: Packing
         run: |                    
           dotnet build XRPL.MagneticService/XRPL.MagneticService.csproj -c Release
