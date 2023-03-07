@@ -17,7 +17,7 @@
     <RepositoryUrl>https://github.com/Xrpl-Daddy/XRPL.MagneticService</RepositoryUrl>
     <Copyright>https://github.com/Platonenkov</Copyright>
     <Authors>Platonenkov</Authors>
-    <Company>https://github.com/Platonenkov</Company>
+    <Company>https://github.com/Xrpl-Daddy</Company>
     <PackageTags>XRPL Magnetic service api</PackageTags>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
