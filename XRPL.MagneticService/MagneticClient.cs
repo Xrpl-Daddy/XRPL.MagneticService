@@ -125,15 +125,15 @@ namespace XRPL.MagneticService
                 data = data.OrderBy(c => c.Id).ToList();
                 all_game.InsertRange(0, data);
 
-                var start = data[0].Id;
-                var end = data[data.Count-1].Id;
-                if (start == end)
-                    break;
-                end = start - 1000;
+                var id = data.Min(c => c.Id);
+                var start = id - 1000;
+                var end = id - 1;
+                if (start < 1) start = 1;
                 if (end < 1) end = 1;
 
-                if (start > end)
-                    (start, end) = (end, start);
+                if (start == end)
+                    break;
+
                 dices2 = await GetDiceHistory(start, end, currencyCode, wallet, Cancel);
             }
 
