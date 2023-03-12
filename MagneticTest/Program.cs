@@ -12,6 +12,7 @@ var client = new MagneticClient(true, null);
 var dices = await client.GetDiceHistory(100);
 var dices2 = await client.GetDiceHistory(1,50,"XRP",null);
 var dices3 = await client.GetFullDiceHistory("xrp","rLiooJRSKeiNfRJcDBUhu4rcjQjGLWqa4p");
+var stats = await client.GetDiceStats("rLiooJRSKeiNfRJcDBUhu4rcjQjGLWqa4p","xrp");
 
 
 var settrings = await client.GetDiceSettings();
