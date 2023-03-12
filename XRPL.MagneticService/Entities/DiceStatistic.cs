@@ -17,5 +17,6 @@ namespace XRPL.MagneticService.Entities
         public double LossBlanace { get; set; }
         public double WinBlanace { get; set; }
         public double TotalVolume { get; set; }
+        public double Profit => WinBlanace - LossBlanace;
     }
 }
