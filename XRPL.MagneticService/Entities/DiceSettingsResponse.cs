@@ -2,6 +2,7 @@
 {
     public class DiceSettingsResponse
     {
+        public string DiceAccount { get; set; }
         public double LessThan { get; set; }
         public double MoreThan { get; set; }
         public double Common { get; set; }
@@ -19,6 +20,7 @@
         public string Issuer { get; set; }
         public double MaxBet { get; set; }
         public double MinBet { get; set; }
+        public double BigDice { get; set; }
     }
 
 }

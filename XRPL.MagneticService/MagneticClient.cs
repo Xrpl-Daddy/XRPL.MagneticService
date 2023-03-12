@@ -30,6 +30,28 @@ namespace XRPL.MagneticService
             var response = await GetAsync<DiceResponse>($"MagneticApi/CheckDice{req}", Cancel);
             return response;
         }
+
+        /// <summary>
+        /// check one of the previous dice
+        /// </summary>
+        /// <param name="wallet">account number</param>
+        /// <param name="currencyCode">currency code - not a hex</param>
+        /// <param name="Cancel"></param>
+        /// <returns></returns>
+        public async Task<BaseServerResponse<DiceResponse>> GetDiceStats(string wallet, string currencyCode, CancellationToken Cancel = default)
+        {
+            if (string.IsNullOrWhiteSpace(wallet) || string.IsNullOrWhiteSpace(currencyCode))
+                throw new ArgumentNullException(nameof(wallet));
+            if (!await CheckLimit(Cancel))
+                return null;
+            var req = $"?wallet={wallet}";
+            if (!string.IsNullOrWhiteSpace(currencyCode))
+                req += $"&currency={currencyCode}";
+            var response = await GetAsync<DiceResponse>($"v1/GetDiceStats{req}", Cancel);
+            return response;
+        }
+
+
         /// <summary>
         /// get dice history
         /// </summary>
@@ -37,11 +59,12 @@ namespace XRPL.MagneticService
         /// <param name="wallet">account number for history, can be null for all players history</param>
         /// <param name="Cancel"></param>
         /// <returns></returns>
+        [Obsolete]
         public async Task<BaseServerResponse<DiceHistoryResponse>> GetDiceHistory(int limit = 400, string wallet = null, CancellationToken Cancel = default)
         {
             if (limit > 400)
                 limit = 400;
-            if (limit < 10) 
+            if (limit < 10)
                 limit = 10;
 
             if (!await CheckLimit(Cancel))
@@ -52,6 +75,72 @@ namespace XRPL.MagneticService
             var response = await GetAsync<DiceHistoryResponse>($"MagneticApi/GetDiceHistory{req}", Cancel);
             return response;
         }
+
+        /// <summary>
+        /// get dice history
+        /// </summary>
+        /// <param name="currencyCode">currency code, not a hex</param>
+        /// <param name="wallet">account number for history, can be null for all players history</param>
+        /// <param name="startId">start game number</param>
+        /// <param name="endId">end game number</param>
+        /// <param name="Cancel"></param>
+        /// <returns></returns>
+        public async Task<BaseServerResponse<DiceHistoryResponse>> GetDiceHistory(long? startId = null, long? endId = null, string currencyCode = null, string wallet = null, CancellationToken Cancel = default)
+        {
+            if (endId < startId)
+                (endId, startId) = (startId, endId);
+
+
+
+
+            if (!await CheckLimit(Cancel))
+                return null;
+
+            var req = string.Empty;
+            if (startId is not null)
+                req += $"&startId={startId}";
+            if (endId is not null)
+                req += $"&endId={endId}";
+            if (!string.IsNullOrWhiteSpace(wallet))
+                req += $"&wallet={wallet}";
+            if (!string.IsNullOrWhiteSpace(currencyCode))
+                req += $"&currency={currencyCode}";
+
+            var response = await GetAsync<DiceHistoryResponse>($"v1/GetDiceHistory?{req}", Cancel);
+            return response;
+        }
+        /// <summary>
+        /// get full dice history
+        /// </summary>
+        /// <param name="currencyCode">currency code, not a hex</param>
+        /// <param name="wallet">account number for history, can be null for all players history</param>
+        /// <param name="Cancel"></param>
+        /// <returns></returns>
+        public async Task<List<DiceResponse>> GetFullDiceHistory(string currencyCode = null, string wallet = null, CancellationToken Cancel = default)
+        {
+            var all_game = new List<DiceResponse>();
+            var dices2 = await GetDiceHistory(null,null,currencyCode,wallet, Cancel);
+            while (dices2.Response.IsSuccessStatusCode && dices2.Data is List<DiceResponse> { Count: > 0 } data)
+            {
+                data = data.OrderBy(c => c.Id).ToList();
+                all_game.InsertRange(0, data);
+
+                var start = data[0].Id;
+                var end = data[data.Count-1].Id;
+                if (start == end)
+                    break;
+                end = start - 1000;
+                if (end < 1) end = 1;
+
+                if (start > end)
+                    (start, end) = (end, start);
+                dices2 = await GetDiceHistory(start, end, currencyCode, wallet, Cancel);
+            }
+
+            return all_game;
+        }
+
+
         /// <summary>
         /// Get dice settings
         /// </summary>

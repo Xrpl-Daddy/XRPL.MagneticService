@@ -7,8 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup>
-    <Version>1.0.0.1</Version>
-    <PackageReleaseNotes>migrate to netstandard2.0</PackageReleaseNotes>
+    <Version>1.0.0.2</Version>
+    <PackageReleaseNotes>new statistic and history poins</PackageReleaseNotes>
     <SourceRevisionId>
       ^build_date$([System.DateTime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ss:fffZ"))
     </SourceRevisionId>
