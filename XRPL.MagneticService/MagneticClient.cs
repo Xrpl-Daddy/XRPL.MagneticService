@@ -38,7 +38,7 @@ namespace XRPL.MagneticService
         /// <param name="currencyCode">currency code - not a hex</param>
         /// <param name="Cancel"></param>
         /// <returns></returns>
-        public async Task<BaseServerResponse<DiceResponse>> GetDiceStats(string wallet, string currencyCode, CancellationToken Cancel = default)
+        public async Task<BaseServerResponse<DiceStatistic>> GetDiceStats(string wallet, string currencyCode, CancellationToken Cancel = default)
         {
             if (string.IsNullOrWhiteSpace(wallet) || string.IsNullOrWhiteSpace(currencyCode))
                 throw new ArgumentNullException(nameof(wallet));
@@ -47,7 +47,7 @@ namespace XRPL.MagneticService
             var req = $"?wallet={wallet}";
             if (!string.IsNullOrWhiteSpace(currencyCode))
                 req += $"&currency={currencyCode}";
-            var response = await GetAsync<DiceResponse>($"v1/GetDiceStats{req}", Cancel);
+            var response = await GetAsync<DiceStatistic>($"v1/GetDiceStats{req}", Cancel);
             return response;
         }
 
