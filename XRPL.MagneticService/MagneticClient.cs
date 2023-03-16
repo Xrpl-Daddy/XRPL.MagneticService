@@ -13,6 +13,71 @@ namespace XRPL.MagneticService
         public MagneticClient(bool waitWhenLimit, string apiKey, string BaseServiceAddress = "https://api.xmagnetic.org") : base(waitWhenLimit, apiKey, BaseServiceAddress)
         {
         }
+
+
+        #region Base
+
+        /// <summary>
+        /// Current block info
+        /// </summary>
+        /// <param name="Cancel"></param>
+        /// <returns></returns>
+        public async Task<BaseServerResponse<BLockInfo>> GetBlockInfo(CancellationToken Cancel = default)
+        {
+            if (!await CheckLimit(Cancel))
+                return null;
+            var response = await GetAsync<BLockInfo>($"MagneticApi/GetBlockChainInfo", Cancel);
+            return response;
+        }
+
+        #endregion
+
+        #region Pools
+        /// <summary>
+        /// Get MAG pools for mining
+        /// </summary>
+        /// <param name="account">account (not null)<br/>
+        /// default - 0<br/>
+        /// if not null - contains current account pool statistic</param>
+        /// <param name="Cancel"></param>
+        /// <returns></returns>
+        public async Task<BaseServerResponse<MagneticPools>> GetMagPools(string account = "0", CancellationToken Cancel = default)
+        {
+
+            if (!await CheckLimit(Cancel))
+                return null;
+            var parameter = string.Empty;
+            if (!string.IsNullOrWhiteSpace(account))
+                parameter = $"?wallet={account}";
+            var response = await GetAsync<MagneticPools>($"MagneticApi/GetMagPools{parameter}", Cancel);
+            return response;
+        }
+        /// <summary>
+        /// Get magnetic sponsor pools for mining
+        /// </summary>
+        /// <param name="account">account (not null)<br/>
+        /// default - 0<br/>
+        /// if not null - contains current account pool statistic</param>
+        /// <param name="Cancel"></param>
+        /// <returns></returns>
+        public async Task<BaseServerResponse<MagneticPools>> GetSponsorPools(string account = "0", CancellationToken Cancel = default)
+        {
+
+            if (!await CheckLimit(Cancel))
+                return null;
+            var parameter = string.Empty;
+            if (!string.IsNullOrWhiteSpace(account))
+                parameter = $"?wallet={account}";
+            var response = await GetAsync<MagneticPools>($"MagneticApi/GetSponsorPools{parameter}", Cancel);
+            return response;
+        }
+
+
+        #endregion
+
+
+        #region Dice
+
         /// <summary>
         /// check one of the previous dice
         /// </summary>
@@ -119,7 +184,7 @@ namespace XRPL.MagneticService
         public async Task<List<DiceResponse>> GetFullDiceHistory(string currencyCode = null, string wallet = null, CancellationToken Cancel = default)
         {
             var all_game = new List<DiceResponse>();
-            var dices2 = await GetDiceHistory(null,null,currencyCode,wallet, Cancel);
+            var dices2 = await GetDiceHistory(null, null, currencyCode, wallet, Cancel);
             while (dices2.Response.IsSuccessStatusCode && dices2.Data is List<DiceResponse> { Count: > 0 } data)
             {
                 data = data.OrderBy(c => c.Id).ToList();
@@ -153,6 +218,9 @@ namespace XRPL.MagneticService
             var response = await GetAsync<DiceSettingsResponse>($"MagneticApi/GetDiceSettings", Cancel);
             return response;
         }
+
+        #endregion
+
         /// <summary>
         /// Get account nfts
         /// </summary>
