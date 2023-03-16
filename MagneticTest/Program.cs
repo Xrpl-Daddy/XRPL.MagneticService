@@ -9,11 +9,21 @@ Console.WriteLine("Hello, World!");
 
 var client = new MagneticClient(true, null);
 
+
+var block_info = await client.GetBlockInfo();
+var mag_pools = await client.GetMagPools();
+var sponsor_pools = await client.GetSponsorPools();
+
+var mag_pools_for_account = await client.GetMagPools("rLiooJRSKeiNfRJcDBUhu4rcjQjGLWqa4p");
+var sponsor_pools_for_account = await client.GetSponsorPools("rLiooJRSKeiNfRJcDBUhu4rcjQjGLWqa4p");
+
+
 var dices = await client.GetDiceHistory(100);
 var dices2 = await client.GetDiceHistory(1,50,"XRP",null);
 var dices3 = await client.GetFullDiceHistory("xrp","rLiooJRSKeiNfRJcDBUhu4rcjQjGLWqa4p");
 var dices4 = await client.GetFullDiceHistory();
 var stats = await client.GetDiceStats("rLiooJRSKeiNfRJcDBUhu4rcjQjGLWqa4p","xrp");
+
 
 
 var settrings = await client.GetDiceSettings();
