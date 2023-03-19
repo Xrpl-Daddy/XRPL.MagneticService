@@ -16,7 +16,6 @@ namespace XRPL.MagneticService.Entities
 
     public enum MagneticNFTsType
     {
-        UNKNOWN,
         Common,
         Rare,
         Epic,
