@@ -116,31 +116,6 @@ namespace XRPL.MagneticService
             return response;
         }
 
-
-        /// <summary>
-        /// get dice history
-        /// </summary>
-        /// <param name="limit">limit count for response, maximum 400</param>
-        /// <param name="wallet">account number for history, can be null for all players history</param>
-        /// <param name="Cancel"></param>
-        /// <returns></returns>
-        [Obsolete]
-        public async Task<BaseServerResponse<DiceHistoryResponse>> GetDiceHistory(int limit = 400, string wallet = null, CancellationToken Cancel = default)
-        {
-            if (limit > 400)
-                limit = 400;
-            if (limit < 10)
-                limit = 10;
-
-            if (!await CheckLimit(Cancel))
-                return null;
-            var req = $"?limit={limit}";
-            if (!string.IsNullOrWhiteSpace(wallet))
-                req += $"&wallet={wallet}";
-            var response = await GetAsync<DiceHistoryResponse>($"MagneticApi/GetDiceHistory{req}", Cancel);
-            return response;
-        }
-
         /// <summary>
         /// get dice history
         /// </summary>
