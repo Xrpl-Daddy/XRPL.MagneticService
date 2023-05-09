@@ -37,9 +37,9 @@
         public int TraideType { get; set; }
         public Reward[] Rewards { get; set; }
         public string GuarantetReward { get; set; }
-        public int Dice { get; set; }
-        public string DiceToken { get; set; }
-        public string DiceIssuer { get; set; }
+        public int? Dice { get; set; }
+        public string? DiceToken { get; set; }
+        public string? DiceIssuer { get; set; }
         public string Common_NFT { get; set; }
         public string Rare_NFT { get; set; }
         public string Epic_NFT { get; set; }
